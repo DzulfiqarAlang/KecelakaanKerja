@@ -1,0 +1,15 @@
+[variables]
+PHP_VERSION = "8.2"
+
+[phases.setup]
+nixPkgs = ["php82", "php82Packages.composer"]
+
+[phases.build]
+cmds = [
+  "composer install --no-dev --optimize-autoloader",
+  "cp .env.example .env",
+  "php artisan key:generate"
+]
+
+[phases.start]
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
